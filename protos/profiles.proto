@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package protos;
+option go_package = "github.com/ducc/profile-collector/protos";
+
+import "google/protobuf/timestamp.proto";
+import "profile.proto";
+
+service Store {
+    rpc ListProfiles(ListProfilesRequest) returns (ListProfilesResponse) {}
+    rpc GetProfile(GetProfileRequest) returns (GetProfileResponse) {}
+    rpc AddProfile(AddProfileRequest) returns (AddProfileResponse) {}
+}
+
+message ProfileMetadata {
+    enum ProfileType {
+        TYPE_UNKNOWN = 0;
+        TYPE_CPU = 1;
+        TYPE_MEMORY = 2;
+    }
+
+    string app_name = 1;
+    google.protobuf.Timestamp start_time = 2;
+    google.protobuf.Timestamp end_time = 3;
+    ProfileType profile_type = 4;
+}
+
+message StoredProfile {
+    Profile profile = 1;
+    ProfileMetadata metadata = 2;
+}
+
+message ListProfilesRequest {
+}
+
+message ListProfilesResponse {
+}
+
+message GetProfileRequest {
+}
+
+message GetProfileResponse {
+}
+
+message AddProfileRequest {
+    StoredProfile profile = 1;
+}
+
+message AddProfileResponse {
+}
